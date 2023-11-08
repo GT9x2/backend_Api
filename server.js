@@ -37,12 +37,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
+
 app.get("/", (req, res,next) => {
   res.send("<h1> เราต่อได้แล้วนะ API-Library </h1>");
   next();
 });
 
- app.use("/book", LibraryRouter);
+app.use("/book", LibraryRouter);
+require("./router/auth.router")(app);
  app.use(notFoundmiddelware);
 
 app.listen(PORT, () => {
