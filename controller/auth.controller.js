@@ -56,7 +56,8 @@ exports.signin = (req,res) =>{
             .status(401)
             .send({ accessToken: null, message: "Invalid Password" });
         }
-        const token = jwt.sign({ id: user.id }, config.secret, {
+        const token = jwt.sign({ id: user.id },
+        config.secret, {
           algorithm: "HS256",
           allowInsecureKeySizes: true,
           expiresIn: config.jwtExpiration, //24hr = 64 *64*24
