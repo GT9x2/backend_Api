@@ -1,9 +1,6 @@
 const db = require("../model")
 const config = require("../config/auth.config")
-// const User = db.user
-// const Role = db.role
-// const RefreshToken = db.refreshToken
-const { user: User, role: Role } = db
+const { user: User, role: Role , refreshToken: RefreshToken } = db
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
 const { request } = require("express")
@@ -62,7 +59,7 @@ exports.signin = (req,res) =>{
           allowInsecureKeySizes: true,
           expiresIn: config.jwtExpiration, //24hr = 64 *64*24
         });
-        // const refreshToken = await RefreshToken.createToken(user);
+        const refreshToken = await RefreshToken.createToken(user);
         let authorities = [];
         user.getRoles().then((roles) => {
           for (let i = 0; i < roles.length; i++) {
@@ -74,7 +71,7 @@ exports.signin = (req,res) =>{
             email: user.email,
             roles: authorities,
             accessToken: token,
-            // refreshToken: refreshToken,
+            refreshToken: refreshToken,
           });
         });
       })
@@ -82,4 +79,46 @@ exports.signin = (req,res) =>{
         res.status(500).send({ message: err.message });
       });
 
+}
+
+exports.refreshToken = async (req,res) => {
+  const {refreshToken:refreshToken} = req.body
+
+  if (requestToken == nuul) {
+    return res.status(403).json({message : "Refresh Token is required!!!"})
+  }
+  try {
+    let refreshToken = await RefreshToken.findOne({
+      where : {
+        token : requestToken,
+      }
+    })
+    if (!refreshToken) {
+      res.status(403).json({message : "Refresh Token is not in database!"})
+      return;
+    }
+    if (RefreshToken.verifyExpiration(refreshToken)) {
+      RefreshToken.destroy({
+        where: {
+          id:refreshToken.id
+        }
+      })
+      res.status(403).json({message:"Refresh Token was expired . Please make new Signin!!!",})
+      return
+    }
+    const user = await refreshToken.getUser();
+    let newAccessToken = jwt.sign({id: user.id},
+    config.secret,
+    {
+      algorithm: "HS256",
+      allowInsecureKeySizes:true,
+      expiresIn:config,jwtExpiration,
+    })
+    return res.status(200).json({
+      accessToken:newAccessToken,
+      refreshToken:refreshToken.token
+    })
+  }catch (err) {
+    return res.status(500).send({message:err})
+  }
 }
