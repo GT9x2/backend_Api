@@ -4,6 +4,9 @@ const cors = require("cors");
 const LibraryRouter = require("./router/Book.router");
 const PORT = 5000;
 const notFoundmiddelware = require("./middleware/not-fonud")
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
 // การประเรียกใช้service ของ express
 const app = express();
 const db = require("./model/index")
@@ -35,6 +38,10 @@ function initial(){
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use("/book", LibraryRouter);
+require("./router/auth.router")(app);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+ app.use(notFoundmiddelware);
 
 
 
@@ -43,9 +50,6 @@ app.get("/", (req, res,next) => {
   next();
 });
 
-app.use("/book", LibraryRouter);
-require("./router/auth.router")(app);
- app.use(notFoundmiddelware);
 
 app.listen(PORT, () => {
   console.log("เซอร์เวอร์ต่ออยู่ที่ http://localhost:" + PORT);
