@@ -230,7 +230,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer"
+            "type": "integer",
+            "readOnly": true
           },
           "name": {
             "type": "string"
