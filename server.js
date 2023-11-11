@@ -38,7 +38,7 @@ function initial(){
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use("/book", LibraryRouter);
+app.use("/books", LibraryRouter);
 require("./router/auth.router")(app);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
  app.use(notFoundmiddelware);

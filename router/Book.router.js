@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-// const Book = require("../controller/Book.controller")
 const {getAll,createBook,getBookId,editBook,deleteId} = require("../controller/Book.controller");
 const {authJwt} = require("../middleware/index")
 
