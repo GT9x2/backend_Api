@@ -84,7 +84,7 @@ exports.signin = (req,res) =>{
 exports.refreshToken = async (req,res) => {
   const {refreshToken:refreshToken} = req.body
 
-  if (requestToken == nuul) {
+  if (requestToken == null) {
     return res.status(403).json({message : "Refresh Token is required!!!"})
   }
   try {
