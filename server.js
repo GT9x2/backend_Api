@@ -38,10 +38,6 @@ function initial(){
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use("/books", LibraryRouter);
-require("./router/auth.router")(app);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
- app.use(notFoundmiddelware);
 
 
 
@@ -55,3 +51,9 @@ app.listen(PORT, () => {
   console.log("เซอร์เวอร์ต่ออยู่ที่ http://localhost:" + PORT);
   
 });
+
+
+app.use("/books", LibraryRouter);
+require("./router/auth.router")(app);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+ app.use(notFoundmiddelware);
