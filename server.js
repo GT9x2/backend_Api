@@ -39,18 +39,19 @@ function initial(){
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
 
-// const whitelist = ['http://localhost:5000','http://localhost:5173','https://extinct-ruby-cap.cyclic.app']
-// const corsOption = {
-//   origin:function(origin,callback){
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null,true)
-//     } else {
-//       callback(new Error('Not allow by CORS'))
-//     }
-//   }
-// }
+const whitelist = ['http://localhost:5000','http://localhost:5173','https://extinct-ruby-cap.cyclic.app']
+const corsOption = {
+  origin:function(origin,callback){
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null,true)
+    } else {
+      callback(new Error('Not allow by CORS'))
+    }
+  }
+}
+
+app.use(cors(corsOption));
   
 
 
