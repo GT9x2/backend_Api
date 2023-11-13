@@ -51,10 +51,10 @@ app.use(express.urlencoded({ extended: false }));
 //   }
 // }
 
-// app.use(cors());
-app.use(cors({
-  origin: 'https://extinct-ruby-cap.cyclic.app'
-}));
+app.use(cors());
+// app.use(cors({
+//   origin: 'https://extinct-ruby-cap.cyclic.app'
+// }));
 
 
 
