@@ -22,6 +22,7 @@ verifyToken = (req , res , next ) => {
             })
         }
         req.userId = decode.id
+        next();
     })
 }
 
