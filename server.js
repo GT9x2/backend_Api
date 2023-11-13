@@ -6,6 +6,7 @@ const PORT = 5000;
 const notFoundmiddelware = require("./middleware/not-fonud")
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const enableCORS = require('./middleware/enablecors');
 
 // การประเรียกใช้service ของ express
 const app = express();
@@ -55,6 +56,7 @@ app.use(cors());
 // app.use(cors({
 //   origin: 'https://extinct-ruby-cap.cyclic.app'
 // }));
+app.use(enableCORS);
 
 
 
