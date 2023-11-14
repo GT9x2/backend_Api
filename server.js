@@ -13,6 +13,10 @@ const app = express();
 const db = require("./model/index")
 const role = db.role
 
+const corsOption = {
+  origin:'http://localhost:5173',
+  Credential:true,
+};
 // เพิ่มตาราง
 //devmode
 // db.sequelize.sync({force:true}).then(()=>{
@@ -42,17 +46,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // const whitelist = ['http://localhost:5000','http://localhost:5173','https://extinct-ruby-cap.cyclic.app']
-// const corsOption = {
-//   origin:function(origin,callback){
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null,true)
-//     } else {
-//       callback(new Error('Not allow by CORS'))
-//     }
-//   }
-// }
-
-app.use(cors());
+app.use(cors(corsOption));
 // app.use(cors({
 //   origin: 'https://extinct-ruby-cap.cyclic.app'
 // }));
