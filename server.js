@@ -6,17 +6,12 @@ const PORT = 5000;
 const notFoundmiddelware = require("./middleware/not-fonud")
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
-// const enableCORS = require('./middleware/enablecors');
+const enableCORS = require('./middleware/enablecors');
 
 // การประเรียกใช้service ของ express
 const app = express();
 const db = require("./model/index")
 const role = db.role
-
-const xhr = new XMLHttpRequest();
-xhr.open('GET', 'https://extinct-ruby-cap.cyclic.app/api/auth/signup', true);
-xhr.withCredentials = true; // ตั้งค่าให้เป็น true ถ้าคุณใช้ credentials
-xhr.send();
 
 
 // เพิ่มตาราง
@@ -48,13 +43,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // const whitelist = ['http://localhost:5000','http://localhost:5173','https://extinct-ruby-cap.cyclic.app']
-// app.use(cors());
-app.use(cors({
-    origin: 'https://extinct-ruby-cap.cyclic.app',
-    methods: 'GET,PUT,PATCH,POST,DELETE',
-    credentials:true,
-  }));
-// app.use(enableCORS);
+app.use(cors(corsOption));
+// app.use(cors({
+//   origin: 'https://extinct-ruby-cap.cyclic.app'
+// }));
+app.use(enableCORS);
 
 
 
