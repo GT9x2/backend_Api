@@ -43,7 +43,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // const whitelist = ['http://localhost:5000','http://localhost:5173','https://extinct-ruby-cap.cyclic.app']
-app.use(cors(corsOption));
+app.use(cors());
 // app.use(cors({
 //   origin: 'https://extinct-ruby-cap.cyclic.app'
 // }));
